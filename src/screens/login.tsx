@@ -1,6 +1,20 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 
-export default function Login() {
+interface prop {
+  user: boolean;
+  handleUser: () => void;
+}
+
+export default function Login({ user, handleUser }: prop) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/index");
+    }
+  }, [user]);
+
   return (
     <div className="bg-secondary h-screen w-screen">
       <div className="h-24 w-full flex justify-center items-center bg-secondary">
@@ -8,9 +22,9 @@ export default function Login() {
       </div>
       <div className="min-h-[500px] w-full bg-secondary items-center justify-center flex">
         <div className="h-48 w-4/5 max-w-[800px] border-2 rounded-md border-primary items-center justify-center flex hover:bg-primary text-2xl font-bold text-primary hover:text-white">
-          {/* <Link to="/index"> */}
-            <button className="hover:underline">Login with Google</button>
-          {/* </Link> */}
+          <button onClick={() => handleUser()} className="hover:underline">
+            Login with Google
+          </button>
         </div>
       </div>
     </div>
