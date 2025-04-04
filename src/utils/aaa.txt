@@ -1,0 +1,5 @@
+kaikki tarvittavat apufunktiot kuten 
+    - valuutan muunto
+    - pvm & aika asetukset
+    - tekstin muokkaus / trimmaus jne..
+
