@@ -16,9 +16,9 @@ export default function TripList({ list }: triplist) {
             <>
               <div
                 key={index}
-                className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5"
+                className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5 p-10"
               >
-                <div className="flex flex-col justify-center items-center">
+                <div className="flex flex-col justify-center items-center hover:cursor-pointer">
                 <h2 className="font-semibold text-3xl text-accent">
                   {item.place}
                 </h2>

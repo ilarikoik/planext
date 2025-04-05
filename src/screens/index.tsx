@@ -29,9 +29,6 @@ export default function Index() {
 
   return (
     <div className="bg-background h-screen w-screen">
-      <button  className=" hover:underline">
-        ETUSIVU {user?.user.toString()}
-      </button>
       <TripList list={list}></TripList>
     </div>
   );

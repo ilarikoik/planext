@@ -21,7 +21,7 @@ function AppContent() {
 
   const user = {
     user:"ilari",
-    logged: true
+    logged: false
   }
 
 // auth yhteydessä tämä ja Navbar näkyvyys pitäs toimia oikein 

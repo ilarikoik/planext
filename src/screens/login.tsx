@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/userContext";
+import googleIcon from "../assets/google-icon.svg";
+import palmTree from "../assets/palm-tree-svgrepo-com.svg"
 
 interface prop {
   user: boolean;
@@ -28,13 +30,15 @@ export default function Login() {
   
 
   return (
-    <div className="bg-secondary h-screen w-screen">
-      <div className="h-24 w-full flex justify-center items-center bg-secondary">
-        <h1 className="text-white font-bold text-4xl pt-20">Planext</h1>
+    <div className="bg-background h-screen w-screen">
+      <div className="h-24 w-full bg-primary flex flex-row justify-center items-center ">
+        <img src={palmTree} className="w-8 h-8" alt="palm tree" />
+        <h1 className="text-background font-bold text-4xl">Travelist</h1>
       </div>
-      <div className="min-h-[500px] w-full bg-secondary items-center justify-center flex">
-        <div className="h-48 w-4/5 max-w-[800px] border-2 rounded-md border-primary items-center justify-center flex hover:bg-primary text-2xl font-bold text-primary hover:text-white">
-          <button onClick={handleClick} className="hover:underline">
+      <div className="min-h-[500px] w-full items-center justify-center flex">
+        <div className="h-48 w-4/5 max-w-[800px] items-center justify-center flex  text-2xl font-bold text-primary  ">
+        <img src={googleIcon} className="w-8 h-8 mr-2 " alt="Google-icon" />
+          <button onClick={handleClick} className=" hover:underline">
             Login with Google
           </button>
         </div>
