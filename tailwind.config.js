@@ -10,7 +10,7 @@ export default {
         primary: '#00A6A6',
         secondary: '#14213D',
         accent: '#FCA311',
-        background: '#E5E5E5',
+        background: '#ffffff',
         textcolor: '#33333'
       }
     },
