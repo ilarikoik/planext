@@ -1,15 +1,16 @@
 //
 //
 
-interface prop {
-  user: boolean;
-  handleUser: () => void;
-}
+// interface prop {
+//   user: boolean;
+//   handleUser: () => void;
+// }
+// { user, handleUser }: prop
 
-export default function Profile({ user, handleUser }: prop) {
+export default function Profile() {
   return (
     <div className="bg-background h-screen w-screen">
-      <button onClick={() => handleUser()} className=" hover:underline">
+      <button  className=" hover:underline">
         vaihda user boolean arvoa tästä
       </button>
       <div className="bg-red-200 h-4/5 w-full justify-center items-center flex">

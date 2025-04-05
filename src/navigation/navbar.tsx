@@ -1,6 +1,16 @@
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../utils/userContext";
 
 export default function Navbar() {
+  const [user, setUser] = useState();
+    
+    
+    const handleClick = () => {
+      if (!user) {
+        console.log("Kirjauduttu ulos, käytä firebasen tarjoamaa LogOut funktiiosa tässä")
+    }
+  };
   return (
     <div className="h-20 w-full">
       <div className="h-full w-full flex flex-row">
@@ -14,6 +24,10 @@ export default function Navbar() {
             </li>
             <li className="hover:underline">
               <Link to="/profile">Profile</Link>
+            </li>
+            <li onClick={handleClick} className="hover:underline text-red-500">
+              Log out
+              {/* <Link to="/">Log Out</Link> */}
             </li>
           </ul>
         </div>

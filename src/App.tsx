@@ -11,45 +11,51 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import { UserContext } from "./utils/userContext";
+
 // jos käyttäjää ei ole niin se palaa samantie Login pagelle
 // useNavigate` ei voi toimia Routerin ulkopuolella, joten AppContent sijoitetaan App-komponenttiin
 // jossa se ympäröidään <Router/>-komponentilla. Näin navigaatio toimii oikein.
 function AppContent() {
-  const [user, setUser] = useState(true);
   const navigate = useNavigate();
 
-  const handleUser = () => {
-    setUser(!user);
-  };
+  const user = {
+    user:"ilari",
+    logged: true
+  }
 
+// auth yhteydessä tämä ja Navbar näkyvyys pitäs toimia oikein 
   useEffect(() => {
-    console.log(user);
     if (!user) {
       navigate("/");
+      console.log("kirjaduttu ulos ");
     }
   }, [user]);
 
+  //userContextilla helppo antaa arvoja mihin vaan sovelluksessa mutta niiden tilan päivittäminen vähän vaikeampaa koska ei voi useStatella päivittää suoraan sitä arvoa vaan useState päivittää sitten arvoa paikallisesti vaan. Pitää tehdä erillinen funnktio sitä varten.
   return (
+    <UserContext.Provider value={user}>
     <div className="min-h-screen bg-secondary min-w-full">
       {user && <Navbar></Navbar>}
       <div className="h-20 w-full bg-red-500 justify-around items-center ">
         <Routes>
           <Route
             path="/"
-            element={<Login user={user} handleUser={handleUser} />}
-          />
+            element={<Login />}
+            />
           <Route
             path="/index"
-            element={<Index user={user} handleUser={handleUser} />}
-          />
+            element={<Index />}
+            />
           <Route
             path="/profile"
-            element={<Profile user={user} handleUser={handleUser} />}
-          />
+            element={<Profile />}
+            />
           <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </div>
+    </UserContext.Provider>
   );
 }
 

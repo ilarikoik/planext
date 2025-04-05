@@ -1,16 +1,21 @@
 //
 //
 
-interface prop {
-  user: boolean;
-  handleUser: () => void;
-}
+import { useContext } from "react";
+import { UserContext } from "../utils/userContext";
 
-export default function Index({ user, handleUser }: prop) {
+// interface prop {
+//   user: boolean;
+//   handleUser: () => void;
+// }
+// { user, handleUser }: prop
+
+export default function Index() {
+    const user = useContext(UserContext)
   return (
     <div className="bg-background h-screen w-screen">
-      <button onClick={() => handleUser()} className=" hover:underline">
-        ETUSIVU {user.toString()}
+      <button  className=" hover:underline">
+        ETUSIVU {user?.user.toString()}
       </button>
     </div>
   );
