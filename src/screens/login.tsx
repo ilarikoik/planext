@@ -31,7 +31,7 @@ export default function Login() {
 
   return (
     <div className="bg-background h-screen w-screen">
-      <div className="h-24 w-full bg-primary flex flex-row justify-center items-center ">
+      <div className="h-32 w-full bg-primary flex flex-row justify-center items-center ">
         <img src={palmTree} className="w-8 h-8" alt="palm tree" />
         <h1 className="text-background font-bold text-4xl">Travelist</h1>
       </div>
