@@ -61,14 +61,14 @@ export default function AddTrip() {
                 label="Destination"
                 variant="outlined"
                 size="medium"
-                color="black"
+                color="warning"
               />
               <TextField
                 id="destination"
                 label="Year"
                 variant="outlined"
                 size="medium"
-                color="black"
+                color="warning"
               />
               <Button
                 className=" hover:bg-orange-500 hover:text-white"
