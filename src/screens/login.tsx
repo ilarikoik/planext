@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/userContext";
 import googleIcon from "../assets/google-icon.svg";
-import palmTree from "../assets/palm-tree-svgrepo-com.svg"
+import palmTree from "../assets/palm-tree-svgrepo-com.svg";
 
 interface prop {
   user: boolean;
@@ -17,7 +17,7 @@ export default function Login() {
   useEffect(() => {
     if (user?.logged) {
       navigate("/index");
-      console.log("kirjauduttu sisään")
+      console.log("kirjauduttu sisään");
     }
   }, [user?.logged]);
 
@@ -25,9 +25,8 @@ export default function Login() {
     if (user) {
       setUser({ ...user, logged: !user.logged });
     }
-    console.log(user?.logged)
+    console.log(user?.logged);
   };
-  
 
   return (
     <div className="bg-background h-screen w-screen">
@@ -37,7 +36,7 @@ export default function Login() {
       </div>
       <div className="min-h-[500px] w-full items-center justify-center flex">
         <div className="h-48 w-4/5 max-w-[800px] items-center justify-center flex  text-2xl font-bold text-primary  ">
-        <img src={googleIcon} className="w-8 h-8 mr-2 " alt="Google-icon" />
+          <img src={googleIcon} className="w-8 h-8 mr-2 " alt="Google-icon" />
           <button onClick={handleClick} className=" hover:underline">
             Login with Google
           </button>
