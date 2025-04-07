@@ -16,7 +16,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user?.logged) {
-      navigate("/index");
+      // navigate("/index");
       console.log("kirjauduttu sisään");
     }
   }, [user?.logged]);
