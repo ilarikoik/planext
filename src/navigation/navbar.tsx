@@ -2,17 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/userContext";
 import palmtree from "../assets/palm-tree-svgrepo-com.svg";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/auth/loginWithGoogle";
 
-export default function Navbar() {
-  const [user, setUser] = useState();
-
-  const handleClick = () => {
-    if (!user) {
-      console.log(
-        "Kirjauduttu ulos, käytä firebasen tarjoamaa LogOut funktiiosa tässä"
-      );
-    }
-  };
+interface handleLogOut {
+  handleLogout: () => void;
+}
+export default function Navbar({ handleLogout }: handleLogOut) {
   return (
     <div className="h-20 w-full">
       <div className="h-full w-full flex flex-row items-center">
@@ -28,9 +24,11 @@ export default function Navbar() {
             <li className="hover:underline">
               <Link to="/profile">Profile</Link>
             </li>
-            <li onClick={handleClick} className="hover:underline text-red-300">
+            <li
+              onClick={handleLogout}
+              className="hover:underline text-red-300 cursor-pointer"
+            >
               Log out
-              {/* <Link to="/">Log Out</Link> */}
             </li>
           </ul>
         </div>

@@ -27,12 +27,6 @@ export default function AddTrip() {
   return (
     <>
       <div className="flex justify-center items-center w-full pt-7">
-        {/* <div
-          onClick={handleOpen}
-          className="h-12 w-12 bg-accent rounded-full flex justify-center items-center hover:cursor-pointer"
-        >
-          <AddIcon sx={{ color: "white" }} fontSize="large" />
-        </div> */}
         <div
           onClick={handleOpen}
           className="h-12 w-fit p-3 text-primary items-center justify-center flex hover:cursor-pointer font-bold"

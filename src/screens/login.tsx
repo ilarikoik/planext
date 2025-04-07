@@ -3,31 +3,13 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { UserContext } from "../utils/userContext";
 import googleIcon from "../assets/google-icon.svg";
 import palmTree from "../assets/palm-tree-svgrepo-com.svg";
+import { handleGoogleLogin } from "../firebase/auth/loginWithGoogle";
 
-interface prop {
-  user: boolean;
-  handleUser: () => void;
+interface getUser {
+  handleLogin: () => void;
 }
 
-export default function Login() {
-  const navigate = useNavigate();
-  const userContxt = useContext(UserContext);
-  const [user, setUser] = useState(userContxt);
-
-  useEffect(() => {
-    if (user?.logged) {
-      // navigate("/index");
-      console.log("kirjauduttu sisään");
-    }
-  }, [user?.logged]);
-
-  const handleClick = () => {
-    if (user) {
-      setUser({ ...user, logged: !user.logged });
-    }
-    console.log(user?.logged);
-  };
-
+export default function Login({ handleLogin }: getUser) {
   return (
     <div className="bg-background h-screen w-screen">
       <div className="h-32 w-full bg-primary flex flex-row justify-center items-center ">
@@ -37,7 +19,7 @@ export default function Login() {
       <div className="min-h-[500px] w-full items-center justify-center flex">
         <div className="h-48 w-4/5 max-w-[800px] items-center justify-center flex  text-2xl font-bold text-primary  ">
           <img src={googleIcon} className="w-8 h-8 mr-2 " alt="Google-icon" />
-          <button onClick={handleClick} className=" hover:underline">
+          <button onClick={handleLogin} className=" hover:underline">
             Login with Google
           </button>
         </div>
