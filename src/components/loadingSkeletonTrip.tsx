@@ -13,15 +13,18 @@ interface List {
 
 export default function LoadingSkeletonTrip({ list }: List) {
   return (
-    <Stack spacing={3} className="flex items-center justify-center">
+    <Stack spacing={3} className="flex items-center justify-center w-full ">
       {list.map(() => {
         return (
-          <Skeleton
-            variant="rectangular"
-            animation="pulse"
-            width={500}
-            height={128}
-          />
+          <div className=" w-5/6 max-w-[700px] min-w-[250px] h-32 flex items-center justify-center">
+            <Skeleton
+              variant="rectangular"
+              animation="pulse"
+              width="100%"
+              sx={{ maxWidth: 500 }}
+              height={128}
+            />
+          </div>
         );
       })}
     </Stack>
