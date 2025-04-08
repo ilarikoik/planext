@@ -20,6 +20,10 @@ export default function Index() {
       year: 2025,
     },
     {
+      place: "Malaysia",
+      year: 2025,
+    },
+    {
       place: "Spain",
       year: 2020,
     },

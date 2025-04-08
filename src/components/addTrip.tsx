@@ -31,6 +31,7 @@ export default function AddTrip() {
   const handleClick = () => {
     setShowAlert(true);
     handleClose();
+    // lisää if error ... error alert
     setTimeout(() => {
       setShowAlert(false);
     }, 3000);
