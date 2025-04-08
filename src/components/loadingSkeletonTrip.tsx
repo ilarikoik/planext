@@ -15,7 +15,14 @@ export default function LoadingSkeletonTrip({ list }: List) {
   return (
     <Stack spacing={3} className="flex items-center justify-center">
       {list.map(() => {
-        return <Skeleton variant="rectangular" width={500} height={128} />;
+        return (
+          <Skeleton
+            variant="rectangular"
+            animation="pulse"
+            width={500}
+            height={128}
+          />
+        );
       })}
     </Stack>
   );

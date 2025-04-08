@@ -39,7 +39,7 @@ export default function AddTrip() {
 
   return (
     <>
-      <div className="flex justify-center items-center w-full pt-7">
+      <div className="flex justify-center items-center w-full pt-7 ">
         <div
           onClick={handleOpen}
           className="h-12 w-fit p-3 text-primary items-center justify-center flex hover:cursor-pointer font-bold"
@@ -51,7 +51,7 @@ export default function AddTrip() {
           Add destination
         </div>
       </div>
-      {showAlert && <SuccessAlert></SuccessAlert>}
+      <div className="m-5">{showAlert && <SuccessAlert></SuccessAlert>}</div>
       <div>
         <Modal
           open={open}
