@@ -17,14 +17,14 @@ interface triplist {
 }
 
 export default function TripList({ list }: triplist) {
-  const [showSkeleton, setShowSkeleton] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [lenght, setLenght] = useState(list.length);
 
   // console.log(lenght + "len");
 
   return (
     <>
-      {showSkeleton ? (
+      {!loading ? (
         <LoadingSkeletonTrip list={list} />
       ) : (
         <div className=" w-full h-fit flex flex-col justify-center items-center p-3">
