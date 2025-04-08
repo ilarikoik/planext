@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
+import SuccessAlert from "./successAlert";
+import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -39,6 +41,7 @@ export default function AddTrip() {
         </div>
       </div>
       <div>
+        {!open && <SuccessAlert></SuccessAlert>}
         <Modal
           open={open}
           onClose={handleClose}
