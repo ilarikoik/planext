@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import SuccessAlert from "./successAlert";
-import { useEffect } from "react";
 
 const style = {
   position: "absolute",
@@ -22,9 +22,19 @@ const style = {
 };
 
 export default function AddTrip() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // näytetää alert 3s
+  const handleClick = () => {
+    setShowAlert(true);
+    handleClose();
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
+  };
 
   return (
     <>
@@ -40,11 +50,11 @@ export default function AddTrip() {
           Add destination
         </div>
       </div>
+      {showAlert && <SuccessAlert></SuccessAlert>}
       <div>
-        {!open && <SuccessAlert></SuccessAlert>}
         <Modal
           open={open}
-          onClose={handleClose}
+          // onClose={handleClick}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -71,7 +81,7 @@ export default function AddTrip() {
                 className=" hover:bg-orange-500 hover:text-white"
                 color="warning"
                 sx={{ fontWeight: "bold" }}
-                onClick={handleClose}
+                onClick={handleClick}
               >
                 OK
               </Button>
