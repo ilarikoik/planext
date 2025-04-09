@@ -35,13 +35,12 @@ function AppContent() {
       console.log("kirjaduttu sisään ");
     } else {
       //saattaa aiheuttaa jotai ongelmia myöhemmi jos user tila päivittyy jostai syystä
-      // navigate("/");
+      navigate("/");
       console.log("kirjaduttu ulos ");
     }
   }, [user]);
 
   const handleLogin = async () => {
-    console.log("aaaaaa");
     let res = await handleGoogleLogin();
     if (res) {
       setUser(res);
