@@ -17,7 +17,7 @@ interface triplist {
 }
 
 export default function TripList({ list }: triplist) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   // const [lenght, setLenght] = useState(list.length);
 
   // console.log(lenght + "len");
@@ -32,7 +32,7 @@ export default function TripList({ list }: triplist) {
             return (
               <div
                 key={index}
-                className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5 p-10"
+                className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5 p-10 shadow-md rounded-xl"
               >
                 <div className="flex flex-col justify-center items-center hover:cursor-pointer">
                   <h2 className="text-xl font-semibold md:text-3xl text-accent">
