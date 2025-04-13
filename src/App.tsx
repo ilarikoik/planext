@@ -42,7 +42,7 @@ function AppContent() {
           firsttimelog: true,
           created: new Date(),
         };
-        const isUser = await getUserFromList(user.uid);
+        const isUser = await getUserFromList(user.uid); //
         if (!isUser) {
           await addUserList(adduser);
         }
