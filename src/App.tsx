@@ -40,9 +40,12 @@ function AppContent() {
           username: user.displayName,
           email: user.email,
           firsttimelog: true,
-          created: user.createdAt,
+          created: new Date(),
         };
-        await addUserList(adduser);
+        const isUser = await getUserFromList(user.uid);
+        if (!isUser) {
+          await addUserList(adduser);
+        }
       } else {
         navigate("/");
         console.log("kirjaduttu ulos ");

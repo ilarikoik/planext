@@ -30,10 +30,10 @@ export async function getUserFromList(uid: string) {
     const userdata = await getDoc(user);
     if (userdata.exists()) {
       console.log("käyttäjä löyty");
-      return userdata;
+      return true;
     } else {
       console.log("käyttäjää ei löytynyt");
-      return null;
+      return false;
     }
   } catch (error) {
     console.log("error while fetching user: ", error);
