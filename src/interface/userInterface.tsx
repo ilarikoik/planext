@@ -5,5 +5,5 @@ export interface userData {
   username: string;
   email: string;
   firsttimelog: boolean;
-  created: Timestamp;
+  created: Date;
 }
