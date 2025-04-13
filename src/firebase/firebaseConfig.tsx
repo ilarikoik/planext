@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
+
 import config from "../config";
 
 const firebaseConfig = {
@@ -11,7 +13,7 @@ const firebaseConfig = {
   messagingSenderId: config.REACT_APP_MESSAGING_SENDER_ID,
   appId: config.REACT_APP_APP_ID,
 };
-
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export default app;
+export { app, db };

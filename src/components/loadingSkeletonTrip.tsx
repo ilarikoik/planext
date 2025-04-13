@@ -1,4 +1,3 @@
-import * as React from "react";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
@@ -21,9 +20,9 @@ export default function LoadingSkeletonTrip({ list }: List) {
               variant="rectangular"
               animation="pulse"
               width="100%"
-              sx={{ maxWidth: 500 }}
+              sx={{ maxWidth: 500, borderRadius: 3 }}
               height={128}
-            />
+            ></Skeleton>
           </div>
         );
       })}

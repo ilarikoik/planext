@@ -3,12 +3,13 @@ import CheckIcon from "@mui/icons-material/Check";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useEffect, useState } from "react";
 
-// parametrinä arvo ja sen perusteella sitte näytetää
-export default function SuccessAlert() {
-  const [oke, setOke] = useState(false);
+interface successValue {
+  success: boolean;
+}
+export default function SuccessAlert({ success }: successValue) {
   return (
     <>
-      {oke ? (
+      {success ? (
         <Alert
           icon={<CheckIcon fontSize="inherit" />}
           severity="success"

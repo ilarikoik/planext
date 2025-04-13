@@ -1,5 +1,9 @@
+import { Timestamp } from "firebase/firestore/lite";
 
-export interface userInterface {
-    user: string;
-    logged: boolean
+export interface userData {
+  uid: string;
+  username: string;
+  email: string;
+  firsttimelog: boolean;
+  created: Timestamp;
 }
