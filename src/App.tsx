@@ -10,10 +10,11 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { UserContext } from "./utils/userContext";
 import { auth, handleGoogleLogin } from "./firebase/auth/loginWithGoogle";
 import { Auth, signOut } from "firebase/auth";
+import { addUserList, getUserFromList } from "./firebase/database/users";
+import { userData } from "./interface/userInterface";
 
 // useNavigate` ei voi toimia Routerin ulkopuolella, joten AppContent sijoitetaan App-komponenttiin
 // jossa se ympäröidään <Router/>-komponentilla. Näin navigaatio toimii oikein.
@@ -30,14 +31,24 @@ function AppContent() {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      navigate("/index");
-      console.log("kirjaduttu sisään ");
-    } else {
-      //saattaa aiheuttaa jotai ongelmia myöhemmi jos user tila päivittyy jostai syystä
-      navigate("/");
-      console.log("kirjaduttu ulos ");
-    }
+    const login = async () => {
+      if (user) {
+        navigate("/index");
+        console.log("kirjaduttu sisään ");
+        const adduser = {
+          uid: user.uid,
+          username: user.displayName,
+          email: user.email,
+          firsttimelog: true,
+          created: user.createdAt,
+        };
+        await addUserList(adduser);
+      } else {
+        navigate("/");
+        console.log("kirjaduttu ulos ");
+      }
+    };
+    login();
   }, [user]);
 
   const handleLogin = async () => {

@@ -1,19 +1,14 @@
 //
 //
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../utils/userContext";
 import TripList from "../components/trips";
 import AddTrip from "../components/addTrip";
-// interface prop {
-//   user: boolean;
-//   handleUser: () => void;
-// }
-// { user, handleUser }: prop
+import { getUserFromList } from "../firebase/database/users";
+import { userData } from "../interface/userInterface";
 
 export default function Index() {
-  const user = useContext(UserContext);
-
   const list = [
     {
       place: "Thailand",

@@ -24,7 +24,7 @@ export default function TripList({ list }: triplist) {
 
   return (
     <>
-      {loading ? (
+      {!loading ? (
         <LoadingSkeletonTrip list={list} />
       ) : (
         <div className=" w-full h-fit flex flex-col justify-center items-center p-3">

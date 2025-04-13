@@ -6,8 +6,11 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SuccessAlert from "./successAlert";
+import { getAuth } from "firebase/auth";
+import { addTrip } from "../firebase/database/trips";
+import { trip, tripsList } from "../interface/triplist";
 
 const style = {
   position: "absolute",
@@ -22,19 +25,44 @@ const style = {
 };
 
 export default function AddTrip() {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [open, setOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [success, setSuccess] = useState(true);
+  const [trip, setTrip] = useState<trip>({
+    destination: "",
+    year: "",
+    createdAt: null,
+    group: [],
+  });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // näytetää alert 3s
   const handleClick = () => {
+    handleTrip();
     setShowAlert(true);
     handleClose();
-    // lisää if error ... error alert
     setTimeout(() => {
       setShowAlert(false);
     }, 3000);
+  };
+
+  const handleTrip = async () => {
+    setSuccess(true);
+    if (user?.uid) {
+      const send = {
+        destination: trip.destination,
+        year: trip.year,
+        createdAt: new Date(),
+        group: [...trip.group, user.uid],
+      };
+      const succ = await addTrip(user?.uid, send);
+      if (!succ) {
+        setSuccess(false);
+      }
+    }
+    setTrip({ ...trip, createdAt: null, destination: "", year: "", group: [] });
   };
 
   return (
@@ -51,7 +79,9 @@ export default function AddTrip() {
           Add destination
         </div>
       </div>
-      <div className="m-5">{showAlert && <SuccessAlert></SuccessAlert>}</div>
+      <div className="m-5">
+        {showAlert && <SuccessAlert success={success}></SuccessAlert>}
+      </div>
       <div>
         <Modal
           open={open}
@@ -65,6 +95,10 @@ export default function AddTrip() {
             </Typography>
             <Stack spacing={2}>
               <TextField
+                onChange={(e) =>
+                  setTrip({ ...trip, destination: e.target.value })
+                }
+                value={trip.destination}
                 id="destination"
                 label="Destination"
                 variant="outlined"
@@ -72,6 +106,8 @@ export default function AddTrip() {
                 color="warning"
               />
               <TextField
+                onChange={(e) => setTrip({ ...trip, year: e.target.value })}
+                value={trip.year}
                 id="destination"
                 label="Year"
                 variant="outlined"
