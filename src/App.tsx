@@ -15,6 +15,7 @@ import { auth, handleGoogleLogin } from "./firebase/auth/loginWithGoogle";
 import { Auth, signOut } from "firebase/auth";
 import { addUserList, getUserFromList } from "./firebase/database/users";
 import { userData } from "./interface/userInterface";
+import Plans from "./screens/plans";
 
 // useNavigate` ei voi toimia Routerin ulkopuolella, joten AppContent sijoitetaan App-komponenttiin
 // jossa se ympäröidään <Router/>-komponentilla. Näin navigaatio toimii oikein.
@@ -42,7 +43,7 @@ function AppContent() {
           firsttimelog: true,
           created: new Date(),
         };
-        const isUser = await getUserFromList(user.uid); //
+        const isUser = await getUserFromList(user.uid);
         if (!isUser) {
           await addUserList(adduser);
         }
@@ -76,6 +77,7 @@ function AppContent() {
             <Route path="/" element={<Login handleLogin={handleLogin} />} />
             <Route path="/index" element={<Index />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/plan" element={<Plans />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </div>

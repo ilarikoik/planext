@@ -24,10 +24,20 @@ const style = {
   p: 4,
 };
 
-export default function AddTrip() {
+interface handleOpenClose {
+  handleOpen: () => void;
+  handleClose: () => void;
+  open: boolean;
+}
+
+export default function AddTrip({
+  handleOpen,
+  handleClose,
+  open,
+}: handleOpenClose) {
   const auth = getAuth();
   const user = auth.currentUser;
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [success, setSuccess] = useState(true);
   const [trip, setTrip] = useState<trip>({
@@ -35,9 +45,11 @@ export default function AddTrip() {
     year: "",
     createdAt: null,
     group: [],
+    plans: [],
   });
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const handleClick = () => {
     handleTrip();
@@ -56,6 +68,7 @@ export default function AddTrip() {
         year: trip.year,
         createdAt: new Date(),
         group: [...trip.group, user.uid],
+        plans: [],
       };
       const succ = await addTrip(user?.uid, send);
       if (!succ) {
@@ -79,7 +92,7 @@ export default function AddTrip() {
           Add destination
         </div>
       </div>
-      <div className="m-5">
+      <div className=" h-8 w-full">
         {showAlert && <SuccessAlert success={success}></SuccessAlert>}
       </div>
       <div>

@@ -5,33 +5,37 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../utils/userContext";
 import TripList from "../components/trips";
 import AddTrip from "../components/addTrip";
-import { getUserFromList } from "../firebase/database/users";
-import { userData } from "../interface/userInterface";
+import { getAllUsersTrips } from "../firebase/database/trips";
+import LoadingSkeletonTrip from "../components/loadingSkeletonTrip";
 
 export default function Index() {
-  const list = [
-    {
-      place: "Thailand",
-      year: 2025,
-    },
-    {
-      place: "Malaysia",
-      year: 2025,
-    },
-    {
-      place: "Spain",
-      year: 2020,
-    },
-    {
-      place: "Portugal",
-      year: 2018,
-    },
-  ];
+  const user = useContext(UserContext);
+  const [trips, setTrips] = useState<any>();
+  const [loading, setLoading] = useState(true);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    const get = async () => {
+      const data = await getAllUsersTrips(user.uid);
+      if (data) {
+        setTrips(data);
+      }
+    };
+    setLoading(false);
+    get();
+  }, [user, open]);
 
   return (
     <div className="bg-background h-screen w-screen">
-      <AddTrip></AddTrip>
-      <TripList list={list}></TripList>
+      <AddTrip
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        open={open}
+      ></AddTrip>
+      {loading ? <LoadingSkeletonTrip /> : <TripList trips={trips}></TripList>}
     </div>
   );
 }
