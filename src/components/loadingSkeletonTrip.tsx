@@ -1,21 +1,15 @@
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
-interface Trip {
-  place: string;
-  year: number;
-}
-
-interface List {
-  list: Trip[];
-}
-
-export default function LoadingSkeletonTrip({ list }: List) {
+export default function LoadingSkeletonTrip() {
   return (
     <Stack spacing={3} className="flex items-center justify-center w-full ">
-      {list.map(() => {
+      {Array.from({ length: 10 }).map((item, index) => {
         return (
-          <div className=" w-5/6 max-w-[700px] min-w-[250px] h-32 flex items-center justify-center">
+          <div
+            key={index}
+            className=" w-5/6 max-w-[700px] min-w-[250px] h-32 flex items-center justify-center"
+          >
             <Skeleton
               variant="rectangular"
               animation="pulse"

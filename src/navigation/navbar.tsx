@@ -24,6 +24,9 @@ export default function Navbar({ handleLogout }: handleLogOut) {
             <li className="hover:underline">
               <Link to="/profile">Profile</Link>
             </li>
+            <li className="hover:underline text-yellow-300">
+              <Link to="/plan">plan{"(poista kun valmis)"}</Link>
+            </li>
             <li
               onClick={handleLogout}
               className="hover:underline text-red-300 cursor-pointer"
