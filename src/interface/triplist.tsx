@@ -12,6 +12,7 @@ interface includes {
 }
 
 interface trip {
+  tripId: string;
   destination: string;
   year: string;
   createdAt: Date | null;
