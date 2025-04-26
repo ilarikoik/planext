@@ -17,10 +17,10 @@ export default function TripList({ trips }: tripsList) {
   const navigate = useNavigate();
 
   const getTripDetails = async (tripId: string) => {
-    const tripdata = await getTripById(tripId, user.uid);
-    if (tripdata) {
-      navigate("/plan", { state: { tripdata: tripdata } });
-    }
+    // const tripdata = await getTripById(tripId, user.uid);
+    // if (tripdata) {
+    navigate("/plan", { state: { tripId: tripId } });
+    // navigate("/plan", { state: { tripId: tripdId } });
   };
   return (
     <>
@@ -38,7 +38,7 @@ export default function TripList({ trips }: tripsList) {
               >
                 <div className="flex flex-col justify-center items-center hover:cursor-pointer">
                   <h2 className="text-xl font-semibold md:text-3xl text-accent">
-                    {item.destination}
+                    {item.destination.toUpperCase()}
                   </h2>
                   <hr className="border-2 border-accent w-4/5" />
                   <h2 className="text-lg font-semibold md:text-2xl text-accent">

@@ -1,1 +1,8 @@
 tietokannan intergaatiot ja toiseen tiedostoon muut funktiot kuten CRUD
+
+
+{
+    id: uid,
+    username: string,
+    firstLogin: true -- jos true avataa moduuli joho username ja sitte muuutetaan falseks 
+}
