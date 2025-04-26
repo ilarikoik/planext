@@ -1,16 +1,18 @@
 import { db } from "../firebaseConfig";
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
   QuerySnapshot,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 //
 
-import { includes, trip } from "../../interface/triplist";
+import { details, includes, trip } from "../../interface/triplist";
 
 export async function addTrip(userId: string, trip: trip) {
   try {
@@ -37,15 +39,65 @@ export async function addTrip(userId: string, trip: trip) {
 export async function addPlansToTrip(
   userId: string,
   tripId: string,
-  plan: includes
+  item: { title: string; items: any[] }
 ) {
   try {
-    await addDoc(collection(db, "users", userId, "trips", tripId), {
-      title: plan.title,
-      details: plan.plans,
+    const tripRef = doc(db, "users", userId, "trips", tripId);
+    const tripSnap = await getDoc(tripRef);
+
+    if (!tripSnap.exists()) {
+      console.error("Trip not found");
+      return;
+    }
+
+    const tripData = tripSnap.data();
+    const currentPlans = tripData.plans || [];
+
+    const newPlan = {
+      title: item.title,
+      plans: item.items,
+    };
+    await updateDoc(tripRef, {
+      plans: [...currentPlans, newPlan],
     });
+
+    console.log("Plan added successfully!");
   } catch (error) {
-    console.log("error adding plans to trip ", error);
+    console.error("Error adding plans to trip", error);
+  }
+}
+
+export async function addDetailsToPlans(
+  userId: string,
+  tripId: string,
+  plansTitle: string,
+  detail: details
+) {
+  try {
+    const tripRef = doc(db, "users", userId, "trips", tripId);
+    const tripSnap = await getDoc(tripRef);
+    if (!tripSnap.exists()) {
+      console.error("Trip not found");
+      return;
+    }
+    const tripData = tripSnap.data();
+    const plansArray = tripData.plans || [];
+    // Käydään plans läpi ja lisätään detail oikeaan kohtaan
+    const updatedPlans = plansArray.map((plan: includes) => {
+      if (plan.title === plansTitle) {
+        return {
+          ...plan,
+          plans: [...plan.plans, detail],
+        };
+      }
+      return plan;
+    });
+    await updateDoc(tripRef, {
+      plans: updatedPlans,
+    });
+    console.log("Successfully added detail to plan!");
+  } catch (error) {
+    console.error("Error adding details to plan", error);
   }
 }
 
@@ -70,12 +122,19 @@ export async function getAllUsersTrips(userId: string) {
   }
 }
 
+// lisää tripId/plans[hotellit[item1,item2],lennot[item1,item2],kuljetus[item1,item2]]
+
 export async function getTripById(tripId: string, uid: string) {
   try {
     const td = doc(db, "users", uid, "trips", tripId);
     const tripData = await getDoc(td);
     if (tripData) {
-      return tripData.data();
+      const data = tripData.data();
+      return {
+        ...data,
+        tripId: tripData.id,
+      };
+      // return tripData.data();
     }
     return null;
   } catch (error) {

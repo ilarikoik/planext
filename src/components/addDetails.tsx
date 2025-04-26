@@ -1,4 +1,3 @@
-import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,10 +5,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
 import { useState } from "react";
-import SuccessAlert from "./successAlert";
 import { getAuth } from "firebase/auth";
-import { addPlansToTrip } from "../firebase/database/trips";
-import { trip } from "../interface/triplist";
+import { addDetailsToPlans, addPlansToTrip } from "../firebase/database/trips";
+import { details, trip } from "../interface/triplist";
 
 const style = {
   position: "absolute",
@@ -23,31 +21,38 @@ const style = {
   p: 4,
 };
 
-interface AddPlanProps {
-  tripId: string;
+interface handle {
+  handleClose: () => void;
+  handleOpen: () => void;
   handleRefresh: () => void; // haetaan data uudestaa kun päivitetään
+  tripId: string;
+  plansTitle: string;
 }
 
-export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
+export default function AddDetails({
+  handleOpen,
+  handleClose,
+  handleRefresh,
+  tripId,
+  plansTitle,
+}: handle) {
   const auth = getAuth();
   const user = auth.currentUser;
-  const [open, setOpen] = useState(false);
-  const [planitem, setPlanItem] = useState({
-    title: "",
-    items: [],
+  const [details, setDetails] = useState<details>({
+    detailtitle: "",
+    price: "",
+    details: "",
   });
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
+  // tallenetaan objekti oikeaan Plans kohtaan
   const handleClick = async () => {
-    console.log(planitem);
+    console.log(details);
     console.log(tripId.toString());
     if (user?.uid && tripId) {
-      await addPlansToTrip(user?.uid, tripId, planitem);
+      await addDetailsToPlans(user.uid, tripId, plansTitle, details);
     }
     handleClose();
     handleRefresh();
-    setPlanItem({ ...planitem, title: "" });
   };
 
   return (
@@ -56,33 +61,47 @@ export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
         <div
           onClick={handleOpen}
           className="h-12 w-fit p-3 text-primary items-center justify-center flex hover:cursor-pointer font-bold"
-        >
-          <Button color="success">
-            <AddIcon></AddIcon>
-            <p className="font-bold ">Add item</p>
-          </Button>
-        </div>
+        ></div>
       </div>
       <div>
         <Modal
-          open={open}
+          open={true}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new item
+              Add items to *** trip
             </Typography>
             <Stack spacing={2}>
               <TextField
-                id="item"
-                label="Flights, hotels, transport..."
+                label="example Flight: HELSINKI to OSLO"
                 variant="outlined"
                 size="medium"
                 color="warning"
-                value={planitem.title}
+                value={details.detailtitle}
                 onChange={(e) =>
-                  setPlanItem({ ...planitem, title: e.target.value })
+                  setDetails({ ...details, detailtitle: e.target.value })
+                }
+              />
+              <TextField
+                label="Amount: 150€"
+                variant="outlined"
+                size="medium"
+                color="warning"
+                value={details.price}
+                onChange={(e) =>
+                  setDetails({ ...details, price: e.target.value })
+                }
+              />
+              <TextField
+                label="Additional info..."
+                variant="outlined"
+                size="medium"
+                color="warning"
+                value={details.details}
+                onChange={(e) =>
+                  setDetails({ ...details, details: e.target.value })
                 }
               />
               <div className="flex w-full">
