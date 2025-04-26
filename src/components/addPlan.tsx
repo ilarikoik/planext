@@ -45,7 +45,7 @@ export default function AddPlan() {
           onClick={handleOpen}
           className="h-12 w-fit p-3 text-primary items-center justify-center flex hover:cursor-pointer font-bold"
         >
-          <Button variant="contained" color="warning">
+          <Button variant="outlined" color="warning">
             <p className="font-bold ">Add item</p>
           </Button>
         </div>

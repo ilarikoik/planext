@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LoadingSkeletonTrip from "./loadingSkeletonTrip";
-import { tripsList } from "../interface/triplist";
+import { tripsList, trip } from "../interface/triplist";
+import { UserContext } from "../utils/userContext";
+import { getTripById } from "../firebase/database/trips";
+import { useNavigate } from "react-router";
 
-interface trip {
-  place: string;
-  year: number;
-}
 // trip - place, year
 // + lisätään kohtia kuten lennot , kuljetus, ruoka, hotelli jne
 // ne sitte lisätään trip taulun sisää ja sitte map() tuodaan ne kaikki sieltä joteki?
@@ -14,6 +13,15 @@ interface trip {
 // CATEGORIES taulussa jokaselle kohdalle pitäs sitte tehä oma taulu jossa attribuuttina esim hotellin nimi ja hinta?
 
 export default function TripList({ trips }: tripsList) {
+  const user = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const getTripDetails = async (tripId: string) => {
+    const tripdata = await getTripById(tripId, user.uid);
+    if (tripdata) {
+      navigate("/plan", { state: { tripdata: tripdata } });
+    }
+  };
   return (
     <>
       {/* {!loading ? (
@@ -26,6 +34,7 @@ export default function TripList({ trips }: tripsList) {
               <div
                 key={index}
                 className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5 p-5 rounded-md shadow-lg shadow-grey "
+                onClick={() => getTripDetails(item.tripId)}
               >
                 <div className="flex flex-col justify-center items-center hover:cursor-pointer">
                   <h2 className="text-xl font-semibold md:text-3xl text-accent">

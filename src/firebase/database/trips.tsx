@@ -60,12 +60,25 @@ export async function getAllUsersTrips(userId: string) {
       });
     });
     list.sort((a, b) => {
-      const yearA = parseInt(a.year) || 0; // jos ei ole luku, käytetään oletusarvoa 0
+      const yearA = parseInt(a.year) || 0;
       const yearB = parseInt(b.year) || 0;
       return yearB - yearA;
     });
     return list;
   } catch (error) {
     console.log("error fetching trips from db ", error);
+  }
+}
+
+export async function getTripById(tripId: string, uid: string) {
+  try {
+    const td = doc(db, "users", uid, "trips", tripId);
+    const tripData = await getDoc(td);
+    if (tripData) {
+      return tripData.data();
+    }
+    return null;
+  } catch (error) {
+    console.log("error while fetching trip data: ", error);
   }
 }
