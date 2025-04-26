@@ -1,7 +1,8 @@
 //
 //
 import AddIcon from "@mui/icons-material/Add";
-
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { Button } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import AddPlan from "../components/addPlan";
@@ -21,10 +22,10 @@ export default function Plans() {
   const [open, setOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState<any>();
-
-  // if (tripdata) {
-  //   console.log(tripdata);
-  // }
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleRefresh = () => setRefresh(!refresh);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   useEffect(() => {
     const get = async () => {
@@ -38,13 +39,17 @@ export default function Plans() {
     get();
   }, [refresh]);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleRefresh = () => setRefresh(!refresh);
-
   const handleAdd = (title: string) => {
     setPlansTitle(title);
     handleOpen();
+  };
+
+  const toggleOpen = (index: number) => {
+    if (openIndexes.includes(index)) {
+      setOpenIndexes(openIndexes.filter((i) => i !== index)); // sulje
+    } else {
+      setOpenIndexes([...openIndexes, index]); // avaa
+    }
   };
 
   if (!data) {
@@ -68,18 +73,19 @@ export default function Plans() {
         )}
         {data.plans &&
           data.plans.map((item: includes, index: any) => {
+            const isOpen = openIndexes.includes(index);
             return (
               <div
                 key={index}
-                className="h-fit p-5 w-4/6 shadow-lg border-black rounded-lg m-4"
+                className="h-fit p-5 w-4/6 shadow-lg border-black rounded-lg "
               >
                 <div className="flex flex-col items-center  center w-full">
                   <div className="flex w-full">
-                    <h2 className=" w-3/6 flex justify-start ml-5 text-primary font-bold text-xl">
+                    <h2 className=" w-3/6 flex justify-start p-2 text-primary font-bold text-xl">
                       {item.title}
                     </h2>
                     <p
-                      className="flex justify-end  w-3/6 "
+                      className="flex justify-end w-3/6 "
                       onClick={() => handleAdd(item.title)}
                     >
                       <AddIcon
@@ -89,22 +95,45 @@ export default function Plans() {
                       ></AddIcon>
                     </p>
                   </div>
-                  {item.plans.map((detail: any, idx: number) => {
-                    return (
-                      // kaikki kaikki plans taulukon kohdat läpi esim lentojen sisällön
-                      <div className=" h-fit w-full p-2 items-center flex">
-                        <div
-                          key={idx}
-                          className="flex justify-between items-center w-full font-semibold"
-                        >
-                          <p>{detail.detailtitle.toUpperCase()} </p>
-                          <p>{detail.price.toUpperCase()} €</p>
-                          <p>{detail.details.toUpperCase()}</p>
-                          {/* <p>{sum}</p> */}
+                  {!isOpen &&
+                    item.plans.map((detail: any, idx: number) => {
+                      return (
+                        // kaikki kaikki plans taulukon kohdat läpi esim lentojen sisällön
+                        <div className="h-fit w-full p-2 items-center flex">
+                          <div
+                            key={idx}
+                            className="flex justify-between items-center w-full  font-semibold"
+                          >
+                            <p className="flex-1 flex justify-start">
+                              {detail.detailtitle.toUpperCase()}
+                            </p>
+                            <p className="flex-1 flex justify-center">
+                              {detail.price.toUpperCase()} €
+                            </p>
+                            <p className="flex-1 flex justify-end">
+                              {detail.details.toUpperCase()}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  <div className="flex justify-center w-full ">
+                    {isOpen ? (
+                      <ArrowUpwardIcon
+                        className="hover:cursor-pointer"
+                        sx={{ color: "orange" }}
+                        fontSize="medium"
+                        onClick={() => toggleOpen(index)}
+                      />
+                    ) : (
+                      <ArrowDownwardIcon
+                        className="hover:cursor-pointer"
+                        sx={{ color: "orange" }}
+                        fontSize="medium"
+                        onClick={() => toggleOpen(index)}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             );
