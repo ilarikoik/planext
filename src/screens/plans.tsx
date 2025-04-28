@@ -3,6 +3,8 @@
 import AddIcon from "@mui/icons-material/Add";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import PeopleIcon from "@mui/icons-material/People";
+import PersonIcon from "@mui/icons-material/Person";
 import { Button } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import AddPlan from "../components/addPlan";
@@ -22,6 +24,7 @@ export default function Plans() {
   const [open, setOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [data, setData] = useState<any>();
+  const [group, setGroup] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleRefresh = () => setRefresh(!refresh);
@@ -33,6 +36,7 @@ export default function Plans() {
         let res = await getTripById(tripId, user?.uid);
         if (res) {
           setData(res);
+          console.log(res);
         }
       }
     };
@@ -73,6 +77,10 @@ export default function Plans() {
         )}
         {data.plans &&
           data.plans.map((item: includes, index: any) => {
+            let summa = item.plans.reduce(
+              (sum, curr) => sum + parseInt(curr.price),
+              0
+            );
             const isOpen = openIndexes.includes(index);
             return (
               <div
@@ -83,6 +91,17 @@ export default function Plans() {
                   <div className="flex w-full">
                     <h2 className=" w-3/6 flex justify-start p-2 text-primary font-bold text-xl">
                       {item.title}
+                    </h2>
+                    <h2
+                      className=" w-full flex items-center justify-center hover:cursor-pointer"
+                      onClick={() => setGroup(!group)}
+                    >
+                      <h2 className="m-2">
+                        {group ? <PersonIcon /> : <PeopleIcon />}
+                      </h2>
+                      {group
+                        ? `${summa / (data.group.length + 1)} €`
+                        : `${summa} €`}
                     </h2>
                     <p
                       className="flex justify-end w-3/6 "
@@ -118,7 +137,7 @@ export default function Plans() {
                       );
                     })}
                   <div className="flex justify-center w-full ">
-                    {isOpen ? (
+                    {!isOpen ? (
                       <ArrowUpwardIcon
                         className="hover:cursor-pointer"
                         sx={{ color: "orange" }}
