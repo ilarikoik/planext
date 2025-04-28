@@ -13,6 +13,8 @@ import { useLocation } from "react-router";
 import { getTripById } from "../firebase/database/trips";
 import { getAuth } from "firebase/auth";
 import AddDetails from "../components/addDetails";
+import LoadingSkeletonTrip from "../components/loadingSkeletonTrip";
+import AddPersonToGroup from "../components/addPersonToGroup";
 // hae db kaikki matkat ja sitten navigate tänne ja aseta sen id:n perusteella otsikoks destination jne...
 export default function Plans() {
   const [plansTitle, setPlansTitle] = useState("");
@@ -48,6 +50,11 @@ export default function Plans() {
     handleOpen();
   };
 
+  const handleAddperson = () => {
+    console.log("add");
+    // hae sähköpostin kautta listasta? palauta uid ja lisätään se group
+  };
+
   const toggleOpen = (index: number) => {
     if (openIndexes.includes(index)) {
       setOpenIndexes(openIndexes.filter((i) => i !== index)); // sulje
@@ -57,7 +64,11 @@ export default function Plans() {
   };
 
   if (!data) {
-    return <p>emptyyyyyyyyyyyyyyyyyyyy</p>;
+    return (
+      <div className="bg-background h-screen w-screen pt-10">
+        <LoadingSkeletonTrip />;
+      </div>
+    );
   }
   return (
     <div className="bg-background h-screen w-screen ">
@@ -65,7 +76,12 @@ export default function Plans() {
         {data.destination.toUpperCase()}
       </h1>
       <div className=" w-full h-full flex flex-col items-center">
-        <AddPlan tripId={tripId} handleRefresh={handleRefresh}></AddPlan>
+        <div className="flex justify-around items-center flex-row w-3/5">
+          <AddPlan tripId={tripId} handleRefresh={handleRefresh}></AddPlan>
+          <div className=" flex hover:cursor-pointer font-bold">
+            {user?.uid && <AddPersonToGroup tripId={tripId} uid={user?.uid} />}
+          </div>
+        </div>
         {open && (
           <AddDetails
             handleClose={handleClose}
@@ -75,6 +91,7 @@ export default function Plans() {
             plansTitle={plansTitle}
           ></AddDetails>
         )}
+
         {data.plans &&
           data.plans.map((item: includes, index: any) => {
             let summa = item.plans.reduce(
@@ -92,17 +109,17 @@ export default function Plans() {
                     <h2 className=" w-3/6 flex justify-start p-2 text-primary font-bold text-xl">
                       {item.title}
                     </h2>
-                    <h2
-                      className=" w-full flex items-center justify-center hover:cursor-pointer"
+                    <div
+                      className=" w-full flex items-center justify-evenly hover:cursor-pointer"
                       onClick={() => setGroup(!group)}
                     >
-                      <h2 className="m-2">
-                        {group ? <PersonIcon /> : <PeopleIcon />}
-                      </h2>
-                      {group
-                        ? `${summa / (data.group.length + 1)} €`
-                        : `${summa} €`}
-                    </h2>
+                      <p>
+                        <PersonIcon /> {`${summa / (data.group.length + 1)} €`}
+                      </p>
+                      <p>
+                        <PeopleIcon /> {`${summa} €`}
+                      </p>
+                    </div>
                     <p
                       className="flex justify-end w-3/6 "
                       onClick={() => handleAdd(item.title)}

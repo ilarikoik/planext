@@ -1,4 +1,3 @@
-import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,10 +5,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
 import { useState } from "react";
-import SuccessAlert from "./successAlert";
-import { getAuth } from "firebase/auth";
-import { addPlansToTrip } from "../firebase/database/trips";
-import { trip } from "../interface/triplist";
+import { getUserByEmail } from "../firebase/database/users";
+import { AddToGroup } from "../firebase/database/trips";
 
 const style = {
   position: "absolute",
@@ -23,31 +20,29 @@ const style = {
   p: 4,
 };
 
-interface AddPlanProps {
+interface handle {
   tripId: string;
-  handleRefresh: () => void; // haetaan data uudestaa kun päivitetään
+  uid: string;
 }
 
-export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
-  const auth = getAuth();
-  const user = auth.currentUser;
+export default function AddPersonToGroup({ tripId, uid }: handle) {
   const [open, setOpen] = useState(false);
-  const [planitem, setPlanItem] = useState({
-    title: "",
-    items: [],
-  });
+  const [searchEmail, setSearchEmail] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleClick = async () => {
-    console.log(planitem);
-    console.log(tripId.toString());
-    if (user?.uid && tripId) {
-      await addPlansToTrip(user?.uid, tripId, planitem);
+    if (searchEmail) {
+      const person = await getUserByEmail(searchEmail);
+      console.log(person, "personnnn");
+      if (person && uid && tripId) {
+        let res = await AddToGroup(person, uid, tripId);
+        console.log(res);
+      } else {
+        console.log("aaaa");
+      }
     }
     handleClose();
-    handleRefresh();
-    setPlanItem({ ...planitem, title: "" });
   };
 
   return (
@@ -59,7 +54,7 @@ export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
         >
           <Button color="success">
             <AddIcon></AddIcon>
-            <p className="font-bold ">Add container</p>
+            <p className="font-bold ">Add Person</p>
           </Button>
         </div>
       </div>
@@ -71,19 +66,16 @@ export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new item
+              Search with email
             </Typography>
             <Stack spacing={2}>
               <TextField
-                id="item"
-                label="Flights, hotels, transport..."
+                id="email"
+                label="example@gmail.com"
                 variant="outlined"
                 size="medium"
                 color="warning"
-                value={planitem.title}
-                onChange={(e) =>
-                  setPlanItem({ ...planitem, title: e.target.value })
-                }
+                onChange={(e) => setSearchEmail(e.target.value)}
               />
               <div className="flex w-full">
                 <Button

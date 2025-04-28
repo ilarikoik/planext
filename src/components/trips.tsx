@@ -17,10 +17,7 @@ export default function TripList({ trips }: tripsList) {
   const navigate = useNavigate();
 
   const getTripDetails = async (tripId: string) => {
-    // const tripdata = await getTripById(tripId, user.uid);
-    // if (tripdata) {
     navigate("/plan", { state: { tripId: tripId } });
-    // navigate("/plan", { state: { tripId: tripdId } });
   };
   return (
     <>

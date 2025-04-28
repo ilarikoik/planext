@@ -141,3 +141,29 @@ export async function getTripById(tripId: string, uid: string) {
     console.log("error while fetching trip data: ", error);
   }
 }
+
+export async function AddToGroup(
+  person: string,
+  userId: string,
+  tripId: string
+) {
+  try {
+    const tripRef = doc(db, "users", userId, "trips", tripId);
+    const tripSnap = await getDoc(tripRef);
+
+    if (!tripSnap.exists()) {
+      console.error("Trip not found");
+      return;
+    }
+
+    const tripData = tripSnap.data();
+    const currentGroup = tripData.group || [];
+
+    await updateDoc(tripRef, {
+      group: [...currentGroup, person],
+    });
+    return "added person to group";
+  } catch (error) {
+    console.log("error while adding person to group ", error);
+  }
+}
