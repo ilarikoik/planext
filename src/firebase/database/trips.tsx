@@ -177,33 +177,37 @@ export async function getTripById(tripId: string, uid: string) {
   }
 }
 
-export async function AddToGroup(
-  person: string,
-  userId: string,
-  tripId: string
-) {
-  try {
-    const tripRef = doc(db, "users", userId, "trips", tripId);
-    const tripSnap = await getDoc(tripRef);
+// toinen saa näkyviin tän tripin mutta sen update ei näy muille sitte
+// myöskään trip group ei kulje mukana ilmeisesti
+// poistan käytöstä ja kokeilla uudestaa joskus
+// firebase luvat kaikki auki atm tän sekoilun jälkee
+// export async function AddToGroup(
+//   person: string,
+//   userId: string,
+//   tripId: string
+// ) {
+//   try {
+//     const tripRef = doc(db, "users", userId, "trips", tripId);
+//     const tripSnap = await getDoc(tripRef);
 
-    if (!tripSnap.exists()) {
-      console.error("Trip not found");
-      return;
-    }
-    const tripData = tripSnap.data();
-    const currentGroup = tripData.group || [];
+//     if (!tripSnap.exists()) {
+//       console.error("Trip not found");
+//       return;
+//     }
+//     const tripData = tripSnap.data();
+//     const currentGroup = tripData.group || [];
 
-    await updateDoc(tripRef, {
-      group: [...currentGroup, person],
-    });
-    // kopioidaan trip toisen käyttäjälle, mutta päivitys ei toimi
-    const tripDoc = tripSnap.data();
-    await addDoc(collection(db, "users", person, "trips"), {
-      ...tripDoc,
-    });
+//     await updateDoc(tripRef, {
+//       group: [...currentGroup, person],
+//     });
+//     // kopioidaan trip toisen käyttäjälle, mutta päivitys ei toimi
+//     const tripDoc = tripSnap.data();
+//     await addDoc(collection(db, "users", person, "trips"), {
+//       ...tripDoc,
+//     });
 
-    return "Added person to group and updated person’s trip list";
-  } catch (error) {
-    console.log("error while adding person to group ", error);
-  }
-}
+//     return "Added person to group and updated person’s trip list";
+//   } catch (error) {
+//     console.log("error while adding person to group ", error);
+//   }
+// }

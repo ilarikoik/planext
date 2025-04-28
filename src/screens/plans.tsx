@@ -91,7 +91,7 @@ export default function Plans() {
         <div className="flex justify-around items-center flex-row w-3/5">
           <AddPlan tripId={tripId} handleRefresh={handleRefresh}></AddPlan>
           <div className=" flex hover:cursor-pointer font-bold">
-            {user?.uid && <AddPersonToGroup tripId={tripId} uid={user?.uid} />}
+            {user?.uid && <AddPersonToGroup />}
           </div>
         </div>
         {open && (
