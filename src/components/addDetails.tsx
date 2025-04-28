@@ -71,7 +71,7 @@ export default function AddDetails({
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add items to *** trip
+              Add items - price by group
             </Typography>
             <Stack spacing={2}>
               <TextField

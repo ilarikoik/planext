@@ -39,3 +39,21 @@ export async function getUserFromList(uid: string) {
     console.log("error while fetching user: ", error);
   }
 }
+
+export async function getUserByEmail(email: string) {
+  try {
+    const usersRef = collection(db, "users");
+    const snapshot = await getDocs(usersRef);
+    // forEach ei voi returnaa kesken loopin vaa pitää käyttää tätä
+    for (const doc of snapshot.docs) {
+      let curremail = doc.data().email;
+      if (curremail == email.trim()) {
+        console.log(doc.data().uid + " uid");
+        return doc.data().uid;
+      }
+    }
+    return null;
+  } catch (error) {
+    console.log("error fetcinh user with email ", error);
+  }
+}
