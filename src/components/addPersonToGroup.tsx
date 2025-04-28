@@ -6,7 +6,7 @@ import Modal from "@mui/material/Modal";
 import { Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { getUserByEmail } from "../firebase/database/users";
-import { AddToGroup } from "../firebase/database/trips";
+// import { AddToGroup } from "../firebase/database/trips";
 
 const style = {
   position: "absolute",
@@ -20,28 +20,30 @@ const style = {
   p: 4,
 };
 
-interface handle {
-  tripId: string;
-  uid: string;
-}
+// interface handle {
+//   tripId: string;
+//   uid: string;
 
-export default function AddPersonToGroup({ tripId, uid }: handle) {
+// }
+// { tripId, uid }: handle
+
+export default function AddPersonToGroup() {
   const [open, setOpen] = useState(false);
   const [searchEmail, setSearchEmail] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleClick = async () => {
-    if (searchEmail) {
-      const person = await getUserByEmail(searchEmail);
-      console.log(person, "personnnn");
-      if (person && uid && tripId) {
-        let res = await AddToGroup(person, uid, tripId);
-        console.log(res);
-      } else {
-        console.log("virhe");
-      }
-    }
+    // if (searchEmail) {
+    //   const person = await getUserByEmail(searchEmail);
+    //   console.log(person, "personnnn");
+    //   if (person && uid && tripId) {
+    //     let res = await AddToGroup(person, uid, tripId);
+    //     console.log(res);
+    //   } else {
+    //     console.log("virhe");
+    //   }
+    // }
     handleClose();
   };
 
