@@ -39,7 +39,7 @@ export default function AddPersonToGroup({ tripId, uid }: handle) {
         let res = await AddToGroup(person, uid, tripId);
         console.log(res);
       } else {
-        console.log("aaaa");
+        console.log("virhe");
       }
     }
     handleClose();

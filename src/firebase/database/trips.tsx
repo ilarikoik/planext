@@ -13,6 +13,7 @@ import {
 //
 
 import { details, includes, trip } from "../../interface/triplist";
+import { useReducer } from "react";
 
 export async function addTrip(userId: string, trip: trip) {
   try {
@@ -101,6 +102,41 @@ export async function addDetailsToPlans(
   }
 }
 
+export async function deleteDetailsFromPlans(
+  userId: string,
+  tripId: string,
+  detail: details,
+  index: number
+) {
+  try {
+    const tripRef = doc(db, "users", userId, "trips", tripId);
+    const tripSnap = await getDoc(tripRef);
+    if (!tripSnap.exists()) {
+      console.error("Trip not found");
+      return;
+    }
+
+    const tripData = tripSnap.data();
+    const plans = tripData.plans || [];
+
+    const updated = plans[index].plans.filter(
+      (item: details) => item.detailtitle !== detail.detailtitle
+    );
+
+    // pävittää vaan tän tietyn containerin
+    plans[index] = {
+      ...plans[index],
+      plans: updated,
+    };
+
+    await updateDoc(tripRef, {
+      plans: plans,
+    });
+  } catch (error) {
+    console.error("Error deleting details from plan", error);
+  }
+}
+
 export async function getAllUsersTrips(userId: string) {
   try {
     const list: any[] = [];
@@ -111,6 +147,7 @@ export async function getAllUsersTrips(userId: string) {
         ...doc.data(),
       });
     });
+
     list.sort((a, b) => {
       const yearA = parseInt(a.year) || 0;
       const yearB = parseInt(b.year) || 0;
@@ -121,8 +158,6 @@ export async function getAllUsersTrips(userId: string) {
     console.log("error fetching trips from db ", error);
   }
 }
-
-// lisää tripId/plans[hotellit[item1,item2],lennot[item1,item2],kuljetus[item1,item2]]
 
 export async function getTripById(tripId: string, uid: string) {
   try {
@@ -155,14 +190,19 @@ export async function AddToGroup(
       console.error("Trip not found");
       return;
     }
-
     const tripData = tripSnap.data();
     const currentGroup = tripData.group || [];
 
     await updateDoc(tripRef, {
       group: [...currentGroup, person],
     });
-    return "added person to group";
+    // kopioidaan trip toisen käyttäjälle, mutta päivitys ei toimi
+    const tripDoc = tripSnap.data();
+    await addDoc(collection(db, "users", person, "trips"), {
+      ...tripDoc,
+    });
+
+    return "Added person to group and updated person’s trip list";
   } catch (error) {
     console.log("error while adding person to group ", error);
   }
