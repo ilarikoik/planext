@@ -16,8 +16,8 @@ export default function Login({ handleLogin }: getUser) {
         <img src={palmTree} className="w-8 h-8" alt="palm tree" />
         <h1 className="text-background font-bold text-4xl">Travelist</h1>
       </div>
-      <div className="min-h-[500px] w-full items-center justify-center flex">
-        <div className="h-48 w-4/5 max-w-[800px] items-center justify-center flex  text-2xl font-bold text-primary  ">
+      <div className="min-h-[500px] w-full items-center justify-center flex ">
+        <div className="h-48 w-4/5 max-w-[800px] items-center justify-center flex  text-2xl font-bold text-primary ">
           <img src={googleIcon} className="w-8 h-8 mr-2 " alt="Google-icon" />
           <button onClick={handleLogin} className=" hover:underline">
             Login with Google

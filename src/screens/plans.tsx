@@ -84,8 +84,10 @@ export default function Plans() {
   return (
     <div className="bg-background h-screen w-screen ">
       <h1 className=" text-accent font-semibold text-3xl w-full justify-center items-center flex pt-10">
-        {data.destination &&
-          data.destination.toUpperCase() + " (" + data.group.length + ")"}
+        {data.destination && data.destination.toUpperCase()}
+      </h1>
+      <h1 className="text-accent font-semibold text-lg flex justify-center">
+        {"  Group size " + data.group.length + " "}
       </h1>
       <div className=" w-full h-full flex flex-col items-center">
         <div className="flex justify-around items-center flex-row w-3/5">
@@ -195,12 +197,15 @@ export default function Plans() {
             );
           })}
         <div className="pt-10">
-          <h1>Group:</h1>
+          {/* <h1 className="text-accent font-semibold text-lg">
+            {" ( Group size " + data.group.length + " )"}
+          </h1> */}
+          {/* <h1>Group:</h1>
           {data.group &&
             data.group.map((item: any) => {
               // let id = await getUserFromList(item);
               return <div>{item}</div>;
-            })}
+            })} */}
         </div>
       </div>
     </div>

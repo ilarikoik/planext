@@ -10,9 +10,9 @@ interface handleLogOut {
 }
 export default function Navbar({ handleLogout }: handleLogOut) {
   return (
-    <div className="h-20 w-full">
-      <div className="h-full w-full flex flex-row items-center">
-        <div className="h-4/5 w-1/6 flex justify-center items-center  ml-10 rounded-lg">
+    <div className="h-20 w-full bg-primary min-w-full ">
+      <div className="h-full w-full flex flex-row items-center ">
+        <div className="h-4/5 w-1/6 flex justify-center items-center  ml-10 rounded-lg ">
           <img src={palmtree} className="w-8 h-8 " alt="Google-icon" />
           <h1 className="text-background font-bold text-3xl ">Travelist</h1>
         </div>

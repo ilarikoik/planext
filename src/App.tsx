@@ -70,9 +70,9 @@ function AppContent() {
 
   return (
     <UserContext.Provider value={user}>
-      <div className="min-h-screen bg-primary min-w-full">
+      <div className="min-h-screen ">
         {user && <Navbar handleLogout={handleLogout}></Navbar>}
-        <div className="h-20 w-full bg-red-500 justify-around items-center ">
+        <div className="h-20 w-full justify-around items-center ">
           <Routes>
             <Route path="/" element={<Login handleLogin={handleLogin} />} />
             <Route path="/index" element={<Index />} />
