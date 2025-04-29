@@ -1,54 +1,43 @@
-# React + TypeScript + Vite
+# 🌴 Travelist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Travelist on web-sovellus, jonka avulla käyttäjät voivat suunnitella ja budjetoida matkoja ystäviensä kanssa. Sovellus käyttää Firebasea kirjautumiseen ja tietojen tallennukseen, ja on rakennettu Reactin ja TypeScriptin avulla.
 
-Currently, two official plugins are available:
+## 🔧 Teknologiat
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Firebase Auth](https://firebase.google.com/docs/auth)
+- [Firebase Realtime Database](https://firebase.google.com/products/realtime-database)
+- [React Router](https://reactrouter.com/)
 
-## Expanding the ESLint configuration
+## 🚀 Ominaisuudet
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Käyttäjän kirjautuminen Google-tilillä (Firebase Auth)
+- Oman matkasuunnitelman luominen ja tallentaminen
+- Budjetointi ja kustannusten seuranta
+- Mahdollisuus jakaa matka ystävien kanssa
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📦 Asennus
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Kloonaa repositorio:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+git clone https://github.com/ilarikoik/travelist.git
+cd travelist
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+npm install
+
+Luo config.tsx tiedosto
+
+const config = {
+  REACT_APP_API_KEY: "your_api_key",
+  REACT_APP_AUTH_DOMAIN: "AUTH_DOMAIN",
+  REACT_APP_PROJECT_ID: "PROJECT_ID",
+  REACT_APP_STORAGE_BUCKET: "STORAGE_BUCKET",
+  REACT_APP_MESSAGING_SENDER_ID: "MESSAGING_SENDER_ID",
+  REACT_APP_APP_ID: "APP_ID",
+};
+
+npm run dev
+
