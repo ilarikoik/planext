@@ -2,6 +2,9 @@
 
 Travelist on web-sovellus, jonka avulla käyttäjät voivat suunnitella ja budjetoida matkoja ystäviensä kanssa. Sovellus käyttää Firebasea kirjautumiseen ja tietojen tallennukseen, ja on rakennettu Reactin ja TypeScriptin avulla.
 
+![Travelist Home](../planext/src/assets/travlist_home.png)
+![Travelist Home](../planext/src/assets/travlist_plan.png)
+
 ## 🔧 Teknologiat
 
 - [React](https://reactjs.org/)
@@ -41,3 +44,4 @@ const config = {
 
 npm run dev
 
+```
