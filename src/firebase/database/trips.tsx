@@ -194,10 +194,16 @@ export async function deleteTripContainer(
     const tripData = tripSnap.data();
     const plans = tripData.plans || [];
 
-    const udpt = plans.filter(
-      (item: includes) => item.title !== plans[givenIndex].title
-    );
-    // päivitetää dokumentti kohta plans uudella listalla
+    // !! tää poistaa kaikki saalla titlellä olevat
+    // const udpt = plans.filter(
+    //   (item: includes) => item.title !== plans[givenIndex].title
+    // );
+    const udpt: includes[] = [];
+    plans.forEach((item: any, index: number) => {
+      if (index !== givenIndex) {
+        udpt.push(item);
+      }
+    });
     await updateDoc(td, {
       plans: udpt,
     });
