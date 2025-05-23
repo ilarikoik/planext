@@ -6,12 +6,13 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import AddPlan from "../components/addPlan";
 import { details, includes, trip } from "../interface/triplist";
 import { useLocation } from "react-router";
 import {
   deleteDetailsFromPlans,
+  deleteTripContainer,
   getTripById,
 } from "../firebase/database/trips";
 import { getAuth } from "firebase/auth";
@@ -81,6 +82,13 @@ export default function Plans() {
     }
     handleRefresh();
   };
+
+  const deleteContainer = async (index: number) => {
+    if (user && tripId) {
+      await deleteTripContainer(tripId, user?.uid, index);
+    }
+    handleRefresh();
+  };
   return (
     <div className="bg-background h-screen w-screen ">
       <h1 className=" text-accent font-semibold text-3xl w-full justify-center items-center flex pt-10">
@@ -120,6 +128,11 @@ export default function Plans() {
                 <div className="flex flex-col items-center  center w-full">
                   <div className="flex w-full">
                     <h2 className=" w-3/6 flex justify-start p-2 text-primary font-bold text-xl">
+                      <DeleteOutlineIcon
+                        color="error"
+                        className="hover:cursor-pointer"
+                        onClick={() => deleteContainer(index)}
+                      />
                       {item.title}
                     </h2>
                     <div
@@ -199,12 +212,12 @@ export default function Plans() {
         <div className="pt-10">
           {/* <h1 className="text-accent font-semibold text-lg">
             {" ( Group size " + data.group.length + " )"}
-          </h1> */}
+            </h1> */}
           {/* <h1>Group:</h1>
           {data.group &&
-            data.group.map((item: any) => {
-              // let id = await getUserFromList(item);
-              return <div>{item}</div>;
+          data.group.map((item: any) => {
+            // let id = await getUserFromList(item);
+            return <div>{item}</div>;
             })} */}
         </div>
       </div>
