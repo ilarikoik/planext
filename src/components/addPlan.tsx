@@ -57,7 +57,7 @@ export default function AddPlan({ tripId, handleRefresh }: AddPlanProps) {
           onClick={handleOpen}
           className=" flex hover:cursor-pointer font-bold"
         >
-          <Button color="success">
+          <Button sx={{ color: "#FCA311" }}>
             <AddIcon></AddIcon>
             <p className="font-bold ">Add container</p>
           </Button>

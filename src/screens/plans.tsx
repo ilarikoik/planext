@@ -20,6 +20,7 @@ import AddDetails from "../components/addDetails";
 import LoadingSkeletonTrip from "../components/loadingSkeletonTrip";
 import AddPersonToGroup from "../components/addPersonToGroup";
 import { getUserFromList } from "../firebase/database/users";
+import { Slider, TextField } from "@mui/material";
 // hae db kaikki matkat ja sitten navigate tänne ja aseta sen id:n perusteella otsikoks destination jne...
 export default function Plans() {
   const [plansTitle, setPlansTitle] = useState("");
@@ -36,6 +37,7 @@ export default function Plans() {
   const handleClose = () => setOpen(false);
   const handleRefresh = () => setRefresh(!refresh);
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
+  const [size, setSize] = useState(1);
 
   useEffect(() => {
     const get = async () => {
@@ -93,16 +95,30 @@ export default function Plans() {
       <h1 className=" text-accent font-semibold text-3xl w-full justify-center items-center flex pt-10">
         {data.destination && data.destination.toUpperCase()}
       </h1>
-      <h1 className="text-accent font-semibold text-lg flex justify-center">
-        {"  Group size " + data.group.length + " "}
-      </h1>
+      {/* <h1 className="text-accent font-semibold text-lg flex justify-center"> */}
+      {/* {"  Group size " + data.group.length + " "} */}
+      {/* {"  Group size " + size + " "} */}
+      {/* </h1> */}
       <div className=" w-full h-full flex flex-col items-center">
         <div className="flex justify-around items-center flex-row w-3/5">
           <AddPlan tripId={tripId} handleRefresh={handleRefresh}></AddPlan>
-          <div className=" flex hover:cursor-pointer font-bold">
-            {user?.uid && <AddPersonToGroup />}
+          {/* <div className=" flex hover:cursor-pointer font-bold"> */}
+          {/* {user?.uid && <AddPersonToGroup />} */}
+          <div className=" flex flex-row items-center justify-center">
+            <p className="text-accent font-semibold text-lg p-3">
+              Group size:{" "}
+            </p>
+            <input
+              type="number"
+              min={1}
+              placeholder={size.toString()}
+              value={size}
+              className="w-12 text-accent font-semibold text-lg"
+              onChange={(e) => setSize(Number(e.target.value))}
+            />
           </div>
         </div>
+        {/* </div> */}
         {open && (
           <AddDetails
             handleClose={handleClose}
@@ -139,11 +155,11 @@ export default function Plans() {
                       onClick={() => setGroup(!group)}
                     >
                       <p>
-                        <PeopleIcon />
-                        {`${(summa / data.group.length).toFixed(2)} €`}
+                        <PersonIcon />
+                        {`${(summa / size).toFixed(2)} €`}
                       </p>
                       <p>
-                        <PersonIcon /> {`${summa} €`}
+                        <PeopleIcon /> {`${summa} €`}
                       </p>
                     </div>
                     <p
