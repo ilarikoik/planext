@@ -3,6 +3,7 @@ import {
   addDoc,
   arrayUnion,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -14,6 +15,7 @@ import {
 
 import { details, includes, trip, tripsList } from "../../interface/triplist";
 import { useReducer } from "react";
+import TripList from "../../components/trips";
 
 export async function addTrip(userId: string, trip: trip) {
   try {
@@ -34,6 +36,15 @@ export async function addTrip(userId: string, trip: trip) {
   } catch (error) {
     console.log("error adding new trip: ", error);
     return false;
+  }
+}
+
+export async function deleteTrip(userId: string, tripId: string) {
+  try {
+    const tripref = doc(db, "users", userId, "trips", tripId);
+    await deleteDoc(tripref);
+  } catch (error) {
+    console.log("error while deleting trip ", error);
   }
 }
 

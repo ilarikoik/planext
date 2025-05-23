@@ -13,6 +13,8 @@ export default function Index() {
   const [trips, setTrips] = useState<any>();
   const [loading, setLoading] = useState(true);
 
+  const [ref, setRef] = useState(false);
+  const handleRef = () => setRef(!ref);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -26,7 +28,7 @@ export default function Index() {
     };
     setLoading(false);
     get();
-  }, [user, open]);
+  }, [user, open, ref]);
 
   return (
     <div className="bg-background h-screen w-screen">
@@ -35,7 +37,11 @@ export default function Index() {
         handleClose={handleClose}
         open={open}
       ></AddTrip>
-      {loading ? <LoadingSkeletonTrip /> : <TripList trips={trips}></TripList>}
+      {loading ? (
+        <LoadingSkeletonTrip />
+      ) : (
+        <TripList trips={trips} handleRef={handleRef}></TripList>
+      )}
     </div>
   );
 }

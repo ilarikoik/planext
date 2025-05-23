@@ -2,22 +2,26 @@ import { useContext, useEffect, useState } from "react";
 import LoadingSkeletonTrip from "./loadingSkeletonTrip";
 import { tripsList, trip } from "../interface/triplist";
 import { UserContext } from "../utils/userContext";
-import { getTripById } from "../firebase/database/trips";
+import { deleteTrip, getTripById } from "../firebase/database/trips";
 import { useNavigate } from "react-router";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-// trip - place, year
-// + lisätään kohtia kuten lennot , kuljetus, ruoka, hotelli jne
-// ne sitte lisätään trip taulun sisää ja sitte map() tuodaan ne kaikki sieltä joteki?
+interface ListPara {
+  handleRef: () => void;
+  trips: trip[];
+}
 
-// pitäs yhistää TRIP taulu ja CATEGORIES(kuten lennot, hotelli,ruoka jne..) taulu joteki? onko FK käytössä firebasessa?
-// CATEGORIES taulussa jokaselle kohdalle pitäs sitte tehä oma taulu jossa attribuuttina esim hotellin nimi ja hinta?
-
-export default function TripList({ trips }: tripsList) {
+export default function TripList({ handleRef, trips }: ListPara) {
   const user = useContext(UserContext);
   const navigate = useNavigate();
 
   const getTripDetails = async (tripId: string) => {
     navigate("/plan", { state: { tripId: tripId } });
+  };
+
+  const handleDelete = (tripId: string) => {
+    deleteTrip(user.uid, tripId);
+    handleRef();
   };
   return (
     <>
@@ -31,9 +35,11 @@ export default function TripList({ trips }: tripsList) {
               <div
                 key={index}
                 className="h-32 w-full max-w-[700px] flex-row justify-center items-center m-5 p-5 rounded-md shadow-lg shadow-grey "
-                onClick={() => getTripDetails(item.tripId)}
               >
-                <div className="flex flex-col justify-center items-center hover:cursor-pointer">
+                <div
+                  className="flex flex-col justify-center items-center hover:cursor-pointer  "
+                  onClick={() => getTripDetails(item.tripId)}
+                >
                   <h2 className="text-xl font-semibold md:text-3xl text-accent">
                     {item.destination.toUpperCase()}
                   </h2>
@@ -41,6 +47,13 @@ export default function TripList({ trips }: tripsList) {
                   <h2 className="text-lg font-semibold md:text-2xl text-accent">
                     {item.year}
                   </h2>
+                </div>
+                <div className=" flex  justify-end ">
+                  <DeleteOutlineIcon
+                    color="error"
+                    className="hover:cursor-pointer"
+                    onClick={() => handleDelete(item.tripId)}
+                  />
                 </div>
               </div>
             );
