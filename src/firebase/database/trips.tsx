@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 //
 
-import { details, includes, trip } from "../../interface/triplist";
+import { details, includes, trip, tripsList } from "../../interface/triplist";
 import { useReducer } from "react";
 
 export async function addTrip(userId: string, trip: trip) {
@@ -175,6 +175,36 @@ export async function getTripById(tripId: string, uid: string) {
   } catch (error) {
     console.log("error while fetching trip data: ", error);
   }
+}
+
+export async function deleteTripContainer(
+  tripdId: string,
+  uid: string,
+  givenIndex: number
+) {
+  try {
+    const td = doc(db, "users", uid, "trips", tripdId);
+    const tripSnap = await getDoc(td);
+
+    if (!tripSnap.exists()) {
+      console.error("Trip not found");
+      return;
+    }
+
+    const tripData = tripSnap.data();
+    const plans = tripData.plans || [];
+
+    const udpt = plans.filter(
+      (item: includes) => item.title !== plans[givenIndex].title
+    );
+    // päivitetää dokumentti kohta plans uudella listalla
+    await updateDoc(td, {
+      plans: udpt,
+    });
+  } catch (error) {
+    console.log("Virhe poistettaessa containeria ", error);
+  }
+  return false;
 }
 
 // toinen saa näkyviin tän tripin mutta sen update ei näy muille sitte
