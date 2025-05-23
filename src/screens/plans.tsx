@@ -43,7 +43,6 @@ export default function Plans() {
         let res = await getTripById(tripId, user?.uid);
         if (res) {
           setData(res);
-          console.log(res);
         }
       }
     };
