@@ -183,13 +183,11 @@ export default function Plans() {
                             key={idx}
                             className="flex justify-between items-center w-full  font-semibold"
                           >
-                            <p
-                              className="flex-1 flex justify-start "
-                              onClick={() => deletethis(detail, index)}
-                            >
+                            <p className="flex-1 flex justify-start ">
                               <DeleteOutlineIcon
                                 color="error"
                                 className="hover:cursor-pointer"
+                                onClick={() => deletethis(detail, index)}
                               />
                               {detail.detailtitle.toUpperCase()}
                             </p>
