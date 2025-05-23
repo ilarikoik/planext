@@ -127,14 +127,24 @@ export default function AddTrip({
                 size="medium"
                 color="warning"
               />
-              <Button
-                className=" hover:bg-orange-500 hover:text-white"
-                color="warning"
-                sx={{ fontWeight: "bold" }}
-                onClick={handleClick}
-              >
-                OK
-              </Button>
+              <div className="w-full h-full  flex justify-center items-center">
+                <Button
+                  className=" hover:bg-orange-500 hover:text-white w-2/5"
+                  color="warning"
+                  sx={{ fontWeight: "bold" }}
+                  onClick={handleClick}
+                >
+                  OK
+                </Button>
+                <Button
+                  className=" hover:bg-red-500 hover:text-white w-2/5"
+                  color="error"
+                  sx={{ fontWeight: "bold" }}
+                  onClick={handleClose}
+                >
+                  Close
+                </Button>
+              </div>
             </Stack>
           </Box>
         </Modal>
