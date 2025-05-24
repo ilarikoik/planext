@@ -7,6 +7,7 @@ import TripList from "../components/trips";
 import AddTrip from "../components/addTrip";
 import { getAllUsersTrips } from "../firebase/database/trips";
 import LoadingSkeletonTrip from "../components/loadingSkeletonTrip";
+import getWeather from "../api/weather";
 
 export default function Index() {
   const user = useContext(UserContext);
@@ -21,9 +22,11 @@ export default function Index() {
 
   useEffect(() => {
     const get = async () => {
-      const data = await getAllUsersTrips(user.uid);
-      if (data) {
-        setTrips(data);
+      if (user) {
+        const data = await getAllUsersTrips(user.uid);
+        if (data) {
+          setTrips(data);
+        }
       }
     };
     setLoading(false);
